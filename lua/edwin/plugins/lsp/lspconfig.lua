@@ -13,6 +13,11 @@ return {
 		-- import mason_lspconfig plugin
 		local mason_lspconfig = require("mason-lspconfig")
 
+		-- set the path to the vue language server
+		local mason_registry = require("mason-registry")
+		local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+			.. "/node_modules/@vue/language-server"
+
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -127,23 +132,20 @@ return {
 					},
 				})
 			end,
-			["volar"] = function()
-				-- configure volar language server
-				lspconfig["volar"].setup({
-					capabilities = capabilities,
-					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
-					init_options = {
-						vue = {
-							hybridMode = false,
-						},
-					},
-				})
-			end,
 			["ts-ls"] = function()
 				-- configure ts language server
-				lspconfig["tsserver"].setup({
+				lspconfig["ts-ls"].setup({
 					capabilities = capabilities,
-					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+					init_options = {
+						plugins = {
+							{
+								name = "@vue/typescript-plugin",
+								location = vue_language_server_path,
+								languages = { "vue" },
+							},
+						},
+					},
+					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 				})
 			end,
 		})
