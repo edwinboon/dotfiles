@@ -27,10 +27,9 @@ return {
 				"tailwindcss",
 				"lua_ls",
 				"emmet_ls",
-				"ts_ls",
+				"ts_ls", -- Correct name for TypeScript Language Server
 				"pyright",
 				"intelephense",
-				"bicep",
 				"volar",
 				"svelte",
 			},

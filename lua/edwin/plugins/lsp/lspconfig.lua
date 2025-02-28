@@ -13,11 +13,6 @@ return {
 		-- import mason_lspconfig plugin
 		local mason_lspconfig = require("mason-lspconfig")
 
-		-- set the path to the vue language server
-		local mason_registry = require("mason-registry")
-		local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
-			.. "/node_modules/@vue/language-server"
-
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -53,7 +48,7 @@ return {
 				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
 				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show diagnostics for file
 
 				opts.desc = "Show line diagnostics"
 				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
@@ -90,6 +85,10 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["ts_ls"] = function()
+				-- configure typescript language server
+				lspconfig["ts_ls"].setup({})
+			end,
 			["graphql"] = function()
 				-- configure graphql language server
 				lspconfig["graphql"].setup({
@@ -112,6 +111,8 @@ return {
 						"scss",
 						"less",
 						"svelte",
+						"vue",
+						"react",
 					},
 				})
 			end,
@@ -130,22 +131,6 @@ return {
 							},
 						},
 					},
-				})
-			end,
-			["ts-ls"] = function()
-				-- configure ts language server
-				lspconfig["ts-ls"].setup({
-					capabilities = capabilities,
-					init_options = {
-						plugins = {
-							{
-								name = "@vue/typescript-plugin",
-								location = vue_language_server_path,
-								languages = { "vue" },
-							},
-						},
-					},
-					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 				})
 			end,
 		})
