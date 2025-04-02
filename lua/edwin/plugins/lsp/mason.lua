@@ -29,8 +29,6 @@ return {
 				"emmet_ls",
 				"ts_ls", -- Correct name for TypeScript Language Server
 				"pyright",
-				"intelephense",
-				"volar",
 				"svelte",
 			},
 		})
