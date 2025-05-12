@@ -30,6 +30,7 @@ return {
 				"ts_ls", -- Correct name for TypeScript Language Server
 				"pyright",
 				"svelte",
+				"gopls",
 			},
 		})
 
