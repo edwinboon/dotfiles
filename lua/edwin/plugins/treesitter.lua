@@ -34,8 +34,6 @@ return {
 				"gitignore",
 				"vimdoc",
 				"python",
-				"php",
-				"vue",
 			},
 			incremental_selection = {
 				enable = true,
