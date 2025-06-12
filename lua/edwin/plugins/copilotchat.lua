@@ -8,7 +8,7 @@ return {
 		build = "make tiktoken", -- Only on MacOS or Linux
 		opts = {},
 		keys = {
-			{ "<leader>zc", ":CopilotChat open<CR>", mode = "n", desc = "Chat with Copilot" },
+			{ "<leader>zc", ":CopilotChat toggle<CR>", mode = "n", desc = "Chat with Copilot" },
 			{ "<leader>ze", ":CopilotChat explain<CR>", mode = "v", desc = "Explain code" },
 			{ "<leader>zr", ":CopilotChat review<CR>", mode = "v", desc = "Review code" },
 			{ "<leader>zf", ":CopilotChat fix<CR>", mode = "v", desc = "Fix code issues" },
