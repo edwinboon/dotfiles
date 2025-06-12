@@ -9,15 +9,19 @@ return {
 		opts = {},
 		keys = {
 			{ "<leader>zc", ":CopilotChat open<CR>", mode = "n", desc = "Chat with Copilot" },
-			{ "<leader>zq", ":CopilotChat close<CR>", mode = "n", desc = "Close chat with Copilot" },
 			{ "<leader>ze", ":CopilotChat explain<CR>", mode = "v", desc = "Explain code" },
 			{ "<leader>zr", ":CopilotChat review<CR>", mode = "v", desc = "Review code" },
 			{ "<leader>zf", ":CopilotChat fix<CR>", mode = "v", desc = "Fix code issues" },
 			{ "<leader>zo", ":CopilotChat optimize<CR>", mode = "v", desc = "Optimize code" },
 			{ "<leader>zd", ":CopilotChat docs<CR>", mode = "v", desc = "Generate documentation" },
 			{ "<leader>zt", ":CopilotChat tests<CR>", mode = "v", desc = "Generate tests" },
-			{ "<leader>zm", ":CopilotChat commit<CR>", mode = "n", desc = "Generate commit message" },
-			{ "<leader>zs", ":CopilotChat commit<CR>", mode = "v", desc = "Generate commit message from selection" },
+			{ "<leader>zm", ":CopilotChat generate_commit_message<CR>", mode = "n", desc = "Generate commit message" },
+			{
+				"<leader>zs",
+				":CopilotChat generate_commit_message<CR>",
+				mode = "v",
+				desc = "Generate commit message from selection",
+			},
 		},
 	},
 }
