@@ -10,6 +10,7 @@ return {
 		keys = {
 			{ "<leader>zc", ":CopilotChat<CR>", mode = "n", desc = "Chat with Copilot" },
 			{ "<leader>ze", ":CopilotChat explain<CR>", mode = "v", desc = "Explain code" },
+			{ "<leader>zR", ":CopilotChat reset<CR>", mode = "n", desc = "Reset CopilotChat" },
 			{ "<leader>zr", ":CopilotChat review<CR>", mode = "v", desc = "Review code" },
 			{ "<leader>zf", ":CopilotChat fix<CR>", mode = "v", desc = "Fix code issues" },
 			{ "<leader>zo", ":CopilotChat optimize<CR>", mode = "v", desc = "Optimize code" },
