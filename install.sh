@@ -15,7 +15,7 @@ echo ""
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Check if running on macOS
-if [[ "$OSTYPE" != "darwin*" ]]; then
+if [[ "$OSTYPE" != "darwin"* ]]; then
     echo -e "${RED}Error: This script is designed for macOS${NC}"
     exit 1
 fi
@@ -123,7 +123,8 @@ if [ -f "$DOTFILES_DIR/wallpaper.jpg" ]; then
 fi
 
 # Set Zsh as default shell if not already
-if [ "$SHELL" != "$(which zsh)" ]; then
+if [ "$SHELL" != "
+$(which zsh)" ]; then
     echo -e "${YELLOW}Setting Zsh as default shell...${NC}"
     chsh -s $(which zsh)
     echo -e "${GREEN}Zsh set as default shell${NC}"
