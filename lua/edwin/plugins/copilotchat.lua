@@ -23,8 +23,8 @@ return {
 			vim.keymap.set(
 				"n",
 				"<leader>co",
-				":CopilotChat #buffer:active<CR>",
-				{ desc = "CopilotChat AI with current buffer" }
+				":CopilotChatOpen<CR>",
+				{ desc = "CopilotChat AI with current buffer, no prompt" }
 			)
 			vim.keymap.set("n", "<leader>cc", ":CopilotChatClose<CR>", { desc = "Close CopilotChat" })
 			vim.keymap.set("n", "<leader>cr", ":CopilotChatReset<CR>", { desc = "Reset CopilotChat" })
