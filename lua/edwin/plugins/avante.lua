@@ -8,7 +8,7 @@ return {
 		providers = {
 			claude = {
 				endpoint = "https://api.anthropic.com",
-				model = "claude-sonnet-4-20250514",
+				model = "claude-haiku-20240307",
 				timeout = 30000,
 				extra_request_body = {
 					temperature = 0.75,
