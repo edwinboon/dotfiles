@@ -12,7 +12,7 @@ return {
 				timeout = 30000,
 				extra_request_body = {
 					temperature = 0.75,
-					max_tokens = 20480,
+					max_tokens = 4096,
 				},
 			},
 			moonshot = {
