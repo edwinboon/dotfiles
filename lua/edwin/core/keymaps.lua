@@ -43,6 +43,9 @@ keymap.set("n", "<leader>sh", "<C-w>s", { desc = "split window horizontally" })
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "close the current split" })
 
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "Switch window left with Ctrl+h" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right with Ctrl+l" })
+
 -- Copy filepath to the clipboard
 keymap.set("n", "<leader>fp", function()
     local filePath = vim.fn.expand("%:~") -- Gets the file path relative to the home directory
