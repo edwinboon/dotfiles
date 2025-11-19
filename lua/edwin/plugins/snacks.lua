@@ -134,5 +134,15 @@ return {
             -- Help
             { "<leader>vh",   function() require("snacks").picker.help() end, desc = "help pages" },
         },
+    },
+    -- NOTE: todo comments w/ snacks
+    {
+        "folke/todo-comments.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        optional = true,
+        keys = {
+            { "<leader>pt", function() require("snacks").picker.todo_comments() end, desc = "All" },
+            { "<leader>pT", function() require("snacks").picker.todo_comments({ keywords = { "TODO","FORGETNOT","FIXME" } }) end, desc = "mains" },
+        },
     }
 }
