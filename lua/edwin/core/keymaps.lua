@@ -38,10 +38,10 @@ keymap.set("n", "<leader>tp", "<cmd><tabp<CR>", { desc = "go to previous tab" })
 keymap.set("n", "<leader>tf", "<cmd><tabnew%<CR>", { desc = "open current tab in new tab" })
 
 -- Split window thingies
-keymap.set("n", "<leaer>sv", "<C-w>v", { desc = "split window vertically" })
-keymap.set("n", "<leaer>sh", "<C-w>s", { desc = "split window horizontally" })
-keymap.set("n", "<leaer>sv", "<C-w>>=", { desc = "make splits equal size" })
-keymap.set("n", "<leaer>sx", "<cmd>close<CR>", { desc = "close the current split" })
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "split window vertically" })
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "split window horizontally" })
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "make splits equal size" })
+keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "close the current split" })
 
 -- Copy filepath to the clipboard
 keymap.set("n", "<leader>fp", function()
