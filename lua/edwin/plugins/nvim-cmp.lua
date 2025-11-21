@@ -17,7 +17,7 @@ return {
         "roobert/tailwindcss-colorizer-cmp.nvim",
     },
     config = function()
-        local cmp = require("plugins.configs.cmp")
+        local cmp = require("cmp")
         local has_luasnip, luasnip = pcall(require, "luasnip")
         local lspkind = require("lspkind")
         local colorizer = require("tailwindcss-colorizer-cmp")
@@ -213,7 +213,121 @@ return {
                     border = {'┌', '─', '┐', '│', '┘', '─', '└', '│'},
                 }
             },
-        })
+            -- config nvim cmp to work with snippet engine
+            snippet = {
+                expand = function(args)
+                    luasnip.lsp_expand(args.body)
+                end,
+            },
+            -- autocompletion sources
+            sources = cmp.config.sources({
+                { name = "luasnip" }, -- snippets
+                { name = "lazydev" },
+                { name = "nvim_lsp"},
+                { name = "buffer" }, -- text within current buffer
+                { name = "path" }, -- file system paths
+                { name = "tailwindcss-colorizer-cmp" },
+                { name = "spell", -- for markdown spellchecks completions
+                    option = {
+                        enable_in_context = function()
+                            local ft = vim.bo.filetype
+                            return ft == "markdown" or ft == "text"
+                        end,
+                    },
+                },
+            }),
+            -- mappings
+            mapping = cmp.mapping.preset.insert({
+                ['<BS>'] = cmp.mapping(function(_fallback)
+                    smart_bs()
+                end, { 'i', 's' }),
 
+                ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+                ['<C-d>'] = cmp.mapping(function()
+                    cmp.close_docs()
+                end, { 'i', 's' }),
+
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+
+                ['<C-j>'] = cmp.mapping(select_next_item),
+                ['<C-k>'] = cmp.mapping(select_prev_item),
+
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        local entry = cmp.get_selected_entry()
+                        confirm(entry)
+                    else
+                        fallback()
+                    end
+                end, { 'i', 's' }),
+
+                ['<S-Tab>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    elseif has_luasnip and in_snippet() and luasnip.jumpable(-1) then
+                        luasnip.jump(-1)
+                    elseif in_leading_indent() then
+                        smart_bs(true) -- true means to dedent
+                    elseif in_whitespace() then
+                        smart_bs()
+                    else
+                        fallback()
+                    end
+                end, { 'i', 's' }),
+
+            }),
+            ['<Tab>'] = cmp.mapping(function(_fallback)
+                if cmp.visible() then
+                    local entries = cmp.get_entries()
+                    if #entries == 1 then
+                        confirm(entries[1])
+                    else
+                        cmp.select_next_item()
+                    end
+                elseif vim.fn['copilot#GetDisplayedSuggestion']() ~= '' then
+                    vim.api.nvim_feedkeys(
+                        vim.fn.replace_termcodes("<Plug>copilot-accept", true, true, true),
+                        "i", true
+                    )
+                elseif in_whitespace() then
+                    vim.api.nvim_feedkeys(vim.fn.replace_termcodes("<Tab>", true, true, true), "i", true)
+                elseif has_luasnip and luasnip.expand_or_locally_jumpable() then
+                    luasnip.expand_or_jump()
+                else
+                    cmp.complete()
+                end
+            end, { 'i', 's' }),
+
+            -- setup lspkind for vscode pictograms in autocompletion dropdown menu
+            formatting = {
+                format = function(entry, vim_item)
+                    -- Add custom lsp_kinds icons
+                    vim_item.kind = string.format('%s %s', lsp_kinds[vim_item.kind] or '', vim_item.kind)
+
+
+                    -- add menu tags (e.g., [Buffer], [LSP])
+                    vim_item.menu = ({
+                        buffer = "[Buffer]",
+                        nvim_lsp = "[LSP]",
+                        luasnip = "[LuaSnip]",
+                        nvim_lua = "[Lua]",
+                        latex_symbols = "[LaTeX]",
+                    })[entry.source.name]
+
+                    -- use lspkind and tailwindcss-colorizer-cmp for additional formatting
+                    vim_item = lspkind.cmp_format({
+                        maxwidth = 25,
+                        ellipsis_char = "...",
+                    })(entry, vim_item)
+
+                    if entry.source.name == "nvim_lsp" then
+                        vim_item = colorizer(entry, vim_item)
+                    end
+
+                    return vim_item
+                end,
+            },
+        })
     end
 }

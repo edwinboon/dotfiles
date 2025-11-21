@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ import = "edwin/plugins" },
-	-- { import = "edwin/plugins/lsp" },
+	{ import = "edwin/plugins/lsp" },
 }, {
 	checker = {
 		enabled = true,
