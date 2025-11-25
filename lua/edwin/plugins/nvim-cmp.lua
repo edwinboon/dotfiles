@@ -20,7 +20,7 @@ return {
         local cmp = require("cmp")
         local has_luasnip, luasnip = pcall(require, "luasnip")
         local lspkind = require("lspkind")
-        local colorizer = require("tailwindcss-colorizer-cmp")
+        local colorizer = require("tailwindcss-colorizer-cmp").formatter
 
         local rhs = function(keys)
             return vim.api.nvim_replace_termcodes(keys, true, true, true)

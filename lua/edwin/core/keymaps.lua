@@ -4,7 +4,7 @@ local keymap = vim.keymap
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-keymap.set("i", "jk", "<ESC>", { desc = "exit insert mode with jk"})
+keymap.set("i", "jk", "<ESC>", { desc = "exit insert mode with jk" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "clear search highlights" })
 
@@ -28,7 +28,12 @@ keymap.set("n", "x", '"_x', opts, { desc = "delete a single character without co
 
 keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "format code" })
 
-keymap.set("n", "<leader>s", [[:%s/\<<C-R><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "replace word cursor is on globally" })
+keymap.set(
+	"n",
+	"<leader>s",
+	[[:%s/\<<C-R><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	{ desc = "replace word cursor is on globally" }
+)
 
 -- Tab thingies
 keymap.set("n", "<leader>to", "<cmd><tabnew<CR>", { desc = "open new tab" })
@@ -48,18 +53,17 @@ keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right with Ctrl+l" })
 
 -- Copy filepath to the clipboard
 keymap.set("n", "<leader>fp", function()
-    local filePath = vim.fn.expand("%:~") -- Gets the file path relative to the home directory
-    vim.fn.setreg("+", filePath) -- Copy the file path to the clipboard register
-    print("File path copied to clipboard: " .. filePath)
+	local filePath = vim.fn.expand("%:~") -- Gets the file path relative to the home directory
+	vim.fn.setreg("+", filePath) -- Copy the file path to the clipboard register
+	print("File path copied to clipboard: " .. filePath)
 end, { desc = "copy file path to clipboard" })
 
--- Highlight yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight when yanking (copying) text",
-    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-})
-
-
+-- Toggle LSP diagnostics visibility
+local isLspDiagnosticsVisible = true
+vim.keymap.set("n", "<leader>lx", function()
+	isLspDiagnosticsVisible = not isLspDiagnosticsVisible
+	vim.diagnostic.config({
+		virtual_text = isLspDiagnosticsVisible,
+		underline = isLspDiagnosticsVisible,
+	})
+end, { desc = "Toggle LSP diagnostics" })
