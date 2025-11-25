@@ -1,34 +1,44 @@
-vim.cmd("let g:netrw_liststyle = 3")
+vim.cmd("let g:netrw_banner = 0")
 
-local opt = vim.opt
+vim.opt.guicursor = ""
+vim.opt.number = true
+vim.opt.relativenumber = true
 
-opt.relativenumber = true
-opt.number = true
-opt.cursorline = true
-opt.wrap = false
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
--- tabs & indentation
-opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
-opt.shiftwidth = 2 -- 2 spaces for indent with
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent from current line when starting a new one
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+vim.opt.wrap = false
 
--- search settings
-opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed case in your search eg: Component, assumes you want case-sensitive
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undofile = true
 
--- turn on termguicolors for tokyonight colorscheme
--- (need iterm2 or any other true color terminal)
-opt.termguicolors = true
-opt.background = "dark" -- colorschemes that can be light or dak will be made dark
-opt.signcolumn = "yes" -- show sign column so that text doens't shift
+vim.opt.incsearch = true
+vim.opt.inccommand = "split"
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
--- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+vim.opt.termguicolors = true
+vim.opt.background = dark
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
 
--- split windows
-opt.splitright = true -- split vertical window to the right
-opt.splitbelow = true -- split horizontal window to the bottom
+vim.opt.backspace = {"start", "eol", "indent" }
+
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+vim.opt.isfname:append("@-@")
+vim.opt.updatetime = 50
+vim.opt.colorcolumn = "80"
+
+vim.opt.clipboard:append("unnamedplus")
+vim.opt.hlsearch = true
+
+vim.opt.mouse = "a"
+vim.g.editorconfig = true
