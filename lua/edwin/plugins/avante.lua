@@ -25,6 +25,52 @@ return {
 				},
 			},
 		},
+		-- Explicit file selector provider (fzf-lua is already in dependencies)
+		file_selector = "fzf",
+		-- Context excludes: prevent sensitive files and build artifacts from being included
+		-- Note: The exact config key may vary by Avante version. Adjust if needed.
+		-- Common patterns: behaviour.context_excludes, exclude_patterns, or file_ignore_patterns
+		behaviour = {
+			-- Exclude patterns for files/directories that should not be included in context
+			auto_suggestions = false, -- Keep this setting
+			context_excludes = {
+				-- Version control
+				".git/",
+				-- Dependencies
+				"node_modules/",
+				"vendor/",
+				".venv/",
+				"venv/",
+				-- Build artifacts
+				"dist/",
+				"build/",
+				"target/",
+				"__pycache__/",
+				"*.pyc",
+				-- Lock files
+				"*.lock",
+				"package-lock.json",
+				"yarn.lock",
+				"pnpm-lock.yaml",
+				-- Minified files
+				"*.min.js",
+				"*.min.css",
+				"*.min.*",
+				-- Secrets and keys (IMPORTANT: never include these)
+				".env",
+				".env.*",
+				"*.pem",
+				"*.key",
+				"id_rsa",
+				"id_rsa.pub",
+				"id_ed25519",
+				"id_ed25519.pub",
+				-- Other common excludes
+				".DS_Store",
+				"*.log",
+				"*.tmp",
+			},
+		},
 	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
