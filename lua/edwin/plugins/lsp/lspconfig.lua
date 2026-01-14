@@ -165,8 +165,53 @@ return {
 			single_file_support = true,
 			init_options = {
 				preferences = {
+					-- Auto-import instellingen
 					includeCompletionsForModuleExports = true,
 					includeCompletionsForImportStatements = true,
+					includeCompletionsWithInsertText = true,
+					includeAutomaticOptionalChainCompletions = true,
+					
+					-- Import preferences
+					importModuleSpecifierPreference = "shortest",
+					importModuleSpecifierEnding = "auto",
+					quotePreference = "auto",
+					
+					-- Code actions
+					provideRefactorNotApplicableReason = true,
+					allowIncompleteCompletions = true,
+					allowRenameOfImportPath = true,
+				},
+			},
+			settings = {
+				typescript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+					suggest = {
+						includeCompletionsForModuleExports = true,
+						includeAutomaticOptionalChainCompletions = true,
+					},
+				},
+				javascript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+					suggest = {
+						includeCompletionsForModuleExports = true,
+						includeAutomaticOptionalChainCompletions = true,
+					},
 				},
 			},
 		})
