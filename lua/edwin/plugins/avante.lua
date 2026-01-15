@@ -19,10 +19,9 @@ return {
 				endpoint = "https://api.anthropic.com",
 				model = "claude-3-haiku-20240307",
 				timeout = 30000, -- Timeout in milliseconds
-				extra_request_body = {
-					temperature = 0.75,
-					max_tokens = 4096,
-				},
+				api_key_name = "AVANTE_ANTHROPIC_API_KEY", -- Your environment variable
+				temperature = 0.75,
+				max_tokens = 4096,
 			},
 		},
 		-- Explicit file selector provider (fzf-lua is already in dependencies)
