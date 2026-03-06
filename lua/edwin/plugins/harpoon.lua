@@ -38,6 +38,27 @@ return {
 			harpoon:list():select(4)
 		end)
 
+		vim.keymap.set("n", "<leader>hr", function()
+			local list = harpoon:list()
+			local current_file = vim.api.nvim_buf_get_name(0)
+
+			-- zoek het indexnummer van het huidige bestand in de Harpoon-list
+			local idx = nil
+			for i, entry in ipairs(list.items) do
+				if entry.value == current_file then
+					idx = i
+					break
+				end
+			end
+
+			if idx then
+				list:remove(idx)
+				print("Bestand verwijderd uit Harpoon: " .. current_file)
+			else
+				print("Huidig bestand staat niet in Harpoon")
+			end
+		end, { desc = "verwijder huidig bestand uit Harpoon" })
+
 		-- Toggle previous & next buffers stored within Harpoon list
 		vim.keymap.set("n", "<C-S-P>", function()
 			harpoon:list():prev()
