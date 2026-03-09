@@ -40,6 +40,7 @@ return {
                 "marksman",
                 "svelte",
                 "pyright",
+                "dartls",
             },
         })
 
