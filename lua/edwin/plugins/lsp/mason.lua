@@ -40,7 +40,7 @@ return {
                 "marksman",
                 "svelte",
                 "pyright",
-                "dartls",
+                -- dartls wordt niet via Mason beheerd; komt gebundeld met de Dart SDK
             },
         })
 
