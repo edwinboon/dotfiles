@@ -1,0 +1,12 @@
+# Secrets - never commit these
+home/.zshrc.secrets
+
+# macOS
+.DS_Store
+
+# Neovim cache/state (not config)
+config/nvim/.cache/
+config/nvim/lazy-lock.json
+config/nvim/.DS_Store
+config/nvim/.claude/
+config/nvim/background.jpg
