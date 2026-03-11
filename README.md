@@ -1,8 +1,8 @@
 # dotfiles
 
-Edwin's macOS dotfiles. Clone en run `install.sh` op een nieuwe laptop.
+Edwin's macOS dotfiles. Clone and run `install.sh` on a new machine.
 
-## Installatie
+## Installation
 
 ```bash
 git clone https://github.com/edwinboon/dotfiles.git ~/dotfiles
@@ -10,31 +10,32 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-Dit doet:
-- Homebrew installeren (als het er nog niet is)
-- Alle packages uit `Brewfile` installeren via `brew bundle`
-- Symlinks aanmaken voor alle dotfiles in `~/` en `~/.config/`
-- NVM installeren (als het er nog niet is)
-- Bun installeren (als het er nog niet is)
-- `~/.zshrc.secrets` aanmaken vanuit het example bestand
+This will:
+- Install Homebrew (if not present)
+- Install all packages from `Brewfile` via `brew bundle`
+- Create symlinks for all dotfiles in `~/` and `~/.config/`
+- Install NVM (if not present)
+- Install Bun (if not present)
+- Install TPM — Tmux Plugin Manager (if not present)
+- Create `~/.zshrc.secrets` from the example file
 
 ## Secrets
 
-Tokens en gevoelige variabelen staan **niet** in deze repo. Na installatie vind je `~/.zshrc.secrets` — vul daar je eigen waarden in:
+Tokens and sensitive variables are **not** tracked in this repo. After installation, fill in your values in `~/.zshrc.secrets`:
 
 ```bash
 nano ~/.zshrc.secrets
 ```
 
-## Structuur
+## Structure
 
 ```
 dotfiles/
 ├── install.sh                  # bootstrap script
 ├── Brewfile                    # homebrew packages
 ├── home/
-│   ├── .zshrc                  # shell config (zonder secrets)
-│   ├── .zshrc.secrets.example  # template voor secrets
+│   ├── .zshrc                  # shell config (without secrets)
+│   ├── .zshrc.secrets.example  # secrets template
 │   ├── .gitconfig
 │   ├── .tmux.conf
 │   ├── .wezterm.lua
@@ -43,9 +44,9 @@ dotfiles/
     └── nvim/                   # neovim config
 ```
 
-## Brewfile bijwerken
+## Updating the Brewfile
 
-Na het installeren van nieuwe tools:
+After installing new tools:
 
 ```bash
 brew bundle dump --file=Brewfile --force
