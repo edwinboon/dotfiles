@@ -82,5 +82,13 @@ if [ ! -f "$HOME/.zshrc.secrets" ]; then
   echo "  !! Don't forget to fill in your secrets in ~/.zshrc.secrets"
 fi
 
+# ---- Desktop wallpaper ----
+WALLPAPER="$DOTFILES_DIR/assets/wallpaper.jpg"
+if [ -f "$WALLPAPER" ]; then
+  echo "==> Setting desktop wallpaper..."
+  osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
+  echo "  Wallpaper set to $WALLPAPER"
+fi
+
 echo ""
 echo "Done! Open a new terminal or run: source ~/.zshrc"
