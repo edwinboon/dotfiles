@@ -82,5 +82,20 @@ if [ ! -f "$HOME/.zshrc.secrets" ]; then
   echo "  !! Don't forget to fill in your secrets in ~/.zshrc.secrets"
 fi
 
+# ---- Desktop wallpaper ----
+WALLPAPER="$DOTFILES_DIR/assets/wallpaper.jpg"
+if [ -f "$WALLPAPER" ]; then
+  echo "==> Setting desktop wallpaper..."
+  if [ "$(uname -s)" = "Darwin" ] && command -v osascript >/dev/null 2>&1; then
+    if osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""; then
+      echo "  Wallpaper set to $WALLPAPER"
+    else
+      echo "  Warning: Failed to set desktop wallpaper via osascript" >&2
+    fi
+  else
+    echo "  Skipping wallpaper: not macOS or 'osascript' not available"
+  fi
+fi
+
 echo ""
 echo "Done! Open a new terminal or run: source ~/.zshrc"
