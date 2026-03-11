@@ -86,8 +86,15 @@ fi
 WALLPAPER="$DOTFILES_DIR/assets/wallpaper.jpg"
 if [ -f "$WALLPAPER" ]; then
   echo "==> Setting desktop wallpaper..."
-  osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
-  echo "  Wallpaper set to $WALLPAPER"
+  if [ "$(uname -s)" = "Darwin" ] && command -v osascript >/dev/null 2>&1; then
+    if osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""; then
+      echo "  Wallpaper set to $WALLPAPER"
+    else
+      echo "  Warning: Failed to set desktop wallpaper via osascript" >&2
+    fi
+  else
+    echo "  Skipping wallpaper: not macOS or 'osascript' not available"
+  fi
 fi
 
 echo ""
