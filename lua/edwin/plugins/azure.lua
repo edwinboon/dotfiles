@@ -7,7 +7,8 @@ return {
 		azure.setup({
 			decrypt = true,
 			keymaps = {
-				fetch_app_settings = "<leader>fa",
+				fetch_app_settings = "<leader>Af",
+				push_app_settings = "<leader>Ap",
 			},
 		})
 	end,
