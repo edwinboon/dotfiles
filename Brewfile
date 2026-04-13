@@ -27,6 +27,7 @@ brew "anomalyco/tap/opencode"
 brew "azure/functions/azure-functions-core-tools@4"
 brew "microsoft/mssql-release/msodbcsql", link: false
 brew "microsoft/mssql-release/mssql-tools"
+brew "direnv"
 cask "flutter"
 cask "font-meslo-lg-nerd-font"
 cask "wezterm"
