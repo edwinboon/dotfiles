@@ -30,6 +30,9 @@ alias ls="eza --icons=always"
 eval "$(zoxide init zsh)"
 alias cd="z"
 
+# ---- Direnv ----
+eval "$(direnv hook zsh)"
+
 # ---- Pnpm ----
 alias pn="pnpm"
 
