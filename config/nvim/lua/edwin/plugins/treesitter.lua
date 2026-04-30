@@ -1,27 +1,30 @@
 return {
 	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			local select = require("nvim-treesitter-textobjects.select")
+			vim.keymap.set({ "x", "o" }, "af", function()
+				select.select_textobject("@function.outer", "textobjects")
+			end)
+			vim.keymap.set({ "x", "o" }, "if", function()
+				select.select_textobject("@function.inner", "textobjects")
+			end)
+		end,
+	},
+	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPre", "BufNewFile" },
 		build = ":TSUpdate",
-
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-		},
-
 		config = function()
-			local treesitter = require("nvim-treesitter.configs")
-
-			-- Config treesitter
-			treesitter.setup({
-				-- enable highlighting
+			require("nvim-treesitter.configs").setup({
 				highlight = {
 					enable = true,
+					additional_vim_regex_highlighting = false,
 				},
-				-- enable indentation
-				indent = {
-					enable = true,
-				},
-				-- ensure these languages parsers are installed
+				indent = { enable = true },
+
 				ensure_installed = {
 					"json",
 					"javascript",
@@ -44,16 +47,6 @@ return {
 					"gitignore",
 				},
 
-				textobjects = {
-					select = {
-						enable = true,
-						lookahead = true,
-						keymaps = {
-							["af"] = "@function.outer",
-							["if"] = "@function.inner",
-						},
-					},
-				},
 				incremental_selection = {
 					enable = true,
 					keymaps = {
@@ -62,30 +55,25 @@ return {
 						scope_incremental = false,
 					},
 				},
-				additional_vim_regex_highlighting = false,
+
 			})
 		end,
 	},
-	-- NOTE: js,ts,jsx,tsx Auto Close Tags
+
 	{
 		"windwp/nvim-ts-autotag",
 		enabled = true,
 		ft = { "html", "xml", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte" },
 		config = function()
-			-- Independent nvim-ts-autotag setup
 			require("nvim-ts-autotag").setup({
 				opts = {
-					enable_close = true, -- Auto-close tags
-					enable_rename = true, -- Auto-rename pairs
-					enable_close_on_slash = false, -- Disable auto-close on trailing `</`
+					enable_close = true,
+					enable_rename = true,
+					enable_close_on_slash = false,
 				},
 				per_filetype = {
-					["html"] = {
-						enable_close = true, -- Disable auto-closing for HTML
-					},
-					["typescriptreact"] = {
-						enable_close = true, -- Explicitly enable auto-closing (optional, defaults to `true`)
-					},
+					["html"] = { enable_close = true },
+					["typescriptreact"] = { enable_close = true },
 				},
 			})
 		end,
