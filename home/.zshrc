@@ -1,4 +1,16 @@
+# ---- Java ----
+# Must be above the instant prompt preamble to avoid Powerlevel10k console I/O warnings.
+# Stderr is silenced so a missing JDK version doesn't produce output during init.
+if command -v /usr/libexec/java_home &>/dev/null; then
+  export JAVA_HOME=$(/usr/libexec/java_home -v 17 2>/dev/null)
+fi
+
+# Suppress any remaining instant-prompt warnings (belt-and-suspenders).
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -66,3 +78,37 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # ---- Secrets (not tracked in git) ----
 # Copy ~/.zshrc.secrets.example to ~/.zshrc.secrets and fill in your values
 [[ -f ~/.zshrc.secrets ]] && source ~/.zshrc.secrets
+
+# ---- Azure PIM ----
+pim() {
+  local JUSTIFICATION="${1:-Work}"
+  echo "Fetching subscription info..."
+  local SUB_ID=$(az account list --query "[?name=='EO Studio Digitaal'].id" -o tsv)
+  if [[ -z "$SUB_ID" ]]; then
+    echo "Error: subscription 'EO Studio Digitaal' not found. Are you logged in? (az login)"
+    return 1
+  fi
+  local USER_ID=$(az ad signed-in-user show --query id -o tsv)
+  local REQUEST_NAME=$(uuidgen | tr '[:upper:]' '[:lower:]')
+  # Azure built-in "Contributor" role definition ID (same across all tenants)
+  local ROLE_DEF_ID="/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+
+  echo "Request Contributor role on studiodigitaal (8h)..."
+  az rest --method PUT \
+    --url "https://management.azure.com/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/$REQUEST_NAME?api-version=2020-10-01" \
+    --body "{
+      \"properties\": {
+        \"principalId\": \"$USER_ID\",
+        \"roleDefinitionId\": \"$ROLE_DEF_ID\",
+        \"requestType\": \"SelfActivate\",
+        \"justification\": \"$JUSTIFICATION\",
+        \"scheduleInfo\": {
+          \"startDateTime\": null,
+          \"expiration\": {
+            \"type\": \"AfterDuration\",
+            \"duration\": \"PT8H\"
+          }
+        }
+      }
+    }" && echo "Done! Requested Contributor role." || echo "Request failed. Possibly the role is already active."
+}
