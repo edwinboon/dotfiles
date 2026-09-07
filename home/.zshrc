@@ -15,14 +15,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Theme + plugins installed via Homebrew
+[[ -r /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme ]] && source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+[[ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-#---- History setup ----
+# ---- History setup ----
 HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
 HISTSIZE=999
@@ -31,7 +32,7 @@ setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
 
-#---- completion using arrow keys (based on history) ----
+# ---- completion using arrow keys (based on history) ----
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
@@ -39,44 +40,55 @@ bindkey '^[[B' history-search-forward
 alias ls="eza --icons=always"
 
 # ---- Zoxide (better cd) ----
-eval "$(zoxide init zsh)"
-alias cd="z"
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+  alias cd="z"
+fi
 
 # ---- Direnv ----
-eval "$(direnv hook zsh)"
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
+# ---- eo cli autocompletion ----
+source <(eo completion zsh)
 
 # ---- Pnpm ----
 alias pn="pnpm"
 
+# ---- Homebrew ----
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # ---- NVM ----
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
-# ---- Pnpm path ----
+# ---- PNPM path ----
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
 # ---- Go ----
-export PATH=$HOME/go/bin:$PATH
+export PATH="$HOME/go/bin:$PATH"
 
 # ---- PostgreSQL ----
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
-# ---- Bun ----
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
 # ---- Envman ----
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
+# ---- Bun completions ----
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# ---- Bun ----
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # ---- Secrets (not tracked in git) ----
-# Copy ~/.zshrc.secrets.example to ~/.zshrc.secrets and fill in your values
+# Put things like NPM_TOKEN in ~/.zshrc.secrets
 [[ -f ~/.zshrc.secrets ]] && source ~/.zshrc.secrets
 
 # ---- Azure PIM ----
