@@ -29,12 +29,11 @@ return {
             -- servers for mason to install
             ensure_installed = {
                 "lua_ls",
-                "ts_ls", -- currently using a ts plugin
+                "ts_ls",
                 "html",
                 "cssls",
                 "tailwindcss",
                 "gopls",
-                "emmet_ls",
                 "emmet_language_server",
                 -- "eslint",
                 "marksman",
@@ -51,6 +50,7 @@ return {
                 "stylua",   -- lua formatter
                 "isort",    -- python formatter
                 "pylint",
+                "biome",    -- js/ts linter used by nvim-lint
                 { 'eslint_d', version = '13.1.2' },
             },
         })

@@ -3,7 +3,7 @@ return {
     {
         "rose-pine/neovim",
         name = "rose-pine",
-        -- priority = 1000,
+        priority = 1000,
         config = function()
             require("rose-pine").setup({
                 variant = "main",      -- auto, main, moon, or dawn
@@ -43,7 +43,7 @@ return {
     {
         "folke/tokyonight.nvim",
         name = "folkeTokyonight",
-        -- priority = 1000,
+        lazy = true, -- not active; load with :colorscheme tokyonight
         config = function()
             local transparent = true
             local bg = "#011628"

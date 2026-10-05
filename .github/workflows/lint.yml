@@ -1,0 +1,23 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ShellCheck install.sh
+        run: shellcheck install.sh
+
+      - name: zsh syntax check
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq zsh
+          zsh -n home/.zshrc home/.zshrc.secrets.example
+
+      - name: git config syntax check
+        run: git config -f home/.gitconfig --list > /dev/null

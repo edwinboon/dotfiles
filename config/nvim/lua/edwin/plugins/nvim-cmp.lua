@@ -222,19 +222,10 @@ return {
             -- autocompletion sources
             sources = cmp.config.sources({
                 { name = "luasnip" }, -- snippets
-                { name = "lazydev" },
                 { name = "nvim_lsp"},
                 { name = "buffer" }, -- text within current buffer
                 { name = "path" }, -- file system paths
                 { name = "tailwindcss-colorizer-cmp" },
-                { name = "spell", -- for markdown spellchecks completions
-                    option = {
-                        enable_in_context = function()
-                            local ft = vim.bo.filetype
-                            return ft == "markdown" or ft == "text"
-                        end,
-                    },
-                },
             }),
             -- mappings
             mapping = cmp.mapping.preset.insert({
@@ -277,28 +268,6 @@ return {
                 end, { 'i', 's' }),
 
             }),
-            ['<Tab>'] = cmp.mapping(function(_fallback)
-                if cmp.visible() then
-                    local entries = cmp.get_entries()
-                    if #entries == 1 then
-                        confirm(entries[1])
-                    else
-                        cmp.select_next_item()
-                    end
-                elseif vim.fn['copilot#GetDisplayedSuggestion']() ~= '' then
-                    vim.api.nvim_feedkeys(
-                        vim.fn.replace_termcodes("<Plug>copilot-accept", true, true, true),
-                        "i", true
-                    )
-                elseif in_whitespace() then
-                    vim.api.nvim_feedkeys(vim.fn.replace_termcodes("<Tab>", true, true, true), "i", true)
-                elseif has_luasnip and luasnip.expand_or_locally_jumpable() then
-                    luasnip.expand_or_jump()
-                else
-                    cmp.complete()
-                end
-            end, { 'i', 's' }),
-
             -- setup lspkind for vscode pictograms in autocompletion dropdown menu
             formatting = {
                 format = function(entry, vim_item)

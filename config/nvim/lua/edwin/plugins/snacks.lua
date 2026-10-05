@@ -126,7 +126,7 @@ return {
 
             -- Snacks Picker
             { "<leader>ff",   function() require("snacks").picker.files() end, desc = "find files" },
-            { "<leader>fc",   function() require("snacks").picker.files({ cwd = "~/dotfiles/nvim/.config/nvim/lua" }) end, desc = "find nvim config files" },
+            { "<leader>fc",   function() require("snacks").picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "find nvim config files" },
             { "<leader>fs",   function() require("snacks").picker.grep() end, desc = "grep word" },
             { "<leader>fws",  function() require("snacks").picker.grep_word() end, desc = "search visual selection or word", mode = { "n", "x" } },
             { "<leader>fk",   function() require("snacks").picker.keymaps({ layout = "ivy" }) end, desc = "search keymaps (snacks picker)" },

@@ -1,4 +1,3 @@
-local opts = { noremap = true, silent = true }
 local keymap = vim.keymap
 
 vim.g.mapleader = " "
@@ -17,14 +16,14 @@ keymap.set("n", "<C-u>", "<C-u>zz", { desc = "move up in the buffer with the cur
 keymap.set("n", "n", "nzzzv", { desc = "center cursor properly when moving to the next search result" })
 keymap.set("n", "N", "Nzzzv", { desc = "center cursor properly when moving to the previous search result" })
 
-keymap.set("v", "<", "<gv", opts, { desc = "indent line to the left" })
-keymap.set("v", ">", ">gv", opts, { desc = "indent line to the right" })
+keymap.set("v", "<", "<gv", { silent = true, desc = "indent line to the left" })
+keymap.set("v", ">", ">gv", { silent = true, desc = "indent line to the right" })
 
 -- Clipboard thingies
 keymap.set("x", "<leader>p", [["_dP]], { desc = "paste without replacing the clipboard content" })
-keymap.set("v", "p", '"_dp', opts, { desc = "prevent pasting from replacing the clipboard in visual mode" })
+keymap.set("v", "p", '"_dp', { silent = true, desc = "prevent pasting from replacing the clipboard in visual mode" })
 keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "delete without copying to the clipboard" })
-keymap.set("n", "x", '"_x', opts, { desc = "delete a single character without copying to the clipboard" })
+keymap.set("n", "x", '"_x', { silent = true, desc = "delete a single character without copying to the clipboard" })
 
 keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "format code" })
 
@@ -36,11 +35,11 @@ keymap.set(
 )
 
 -- Tab thingies
-keymap.set("n", "<leader>to", "<cmd><tabnew<CR>", { desc = "open new tab" })
-keymap.set("n", "<leader>tx", "<cmd><tabclose<CR>", { desc = "close current tab" })
-keymap.set("n", "<leader>tn", "<cmd><tabn<CR>", { desc = "go to next tab" })
-keymap.set("n", "<leader>tp", "<cmd><tabp<CR>", { desc = "go to previous tab" })
-keymap.set("n", "<leader>tf", "<cmd><tabnew%<CR>", { desc = "open current tab in new tab" })
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "open new tab" })
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "close current tab" })
+keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "go to next tab" })
+keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "go to previous tab" })
+keymap.set("n", "<leader>tf", "<cmd>tabnew%<CR>", { desc = "open current tab in new tab" })
 
 -- Split window thingies
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "split window vertically" })

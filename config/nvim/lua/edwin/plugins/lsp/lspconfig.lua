@@ -131,23 +131,6 @@ return {
 		})
 		vim.lsp.enable("emmet_language_server")
 
-		-- emmet_ls
-		vim.lsp.config("emmet_ls", {
-			filetypes = {
-				"html",
-				"javascript",
-				"typescript",
-				"javascriptreact",
-				"typescriptreact",
-				"css",
-				"scss",
-				"python",
-				"go",
-				"svelte",
-			},
-		})
-		vim.lsp.enable("emmet_ls")
-
 		-- tailwindcss
 		vim.lsp.config("tailwindcss", {
 			capabilities = capabilities,
@@ -249,5 +232,8 @@ return {
 			},
 		})
 		vim.lsp.enable("dartls")
+
+		-- Servers that work with their default config
+		vim.lsp.enable({ "html", "cssls", "svelte", "pyright", "marksman" })
 	end,
 }

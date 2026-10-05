@@ -1,0 +1,5 @@
+# Copy this file to ~/.gitconfig.local and fill in your details.
+# ~/.gitconfig.local is NOT tracked in git.
+[user]
+	name = Your Name
+	email = you@example.com
