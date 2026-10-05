@@ -1,9 +1,24 @@
+# ---- Homebrew ----
+# First, so every `command -v` check below can find Homebrew-installed tools,
+# even in shells that didn't source ~/.zprofile.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Keep PATH free of duplicates when shells are nested (tmux, nvim :terminal).
+typeset -U path
+
 # ---- Java ----
 # Must be above the instant prompt preamble to avoid Powerlevel10k console I/O warnings.
 # Stderr is silenced so a missing JDK version doesn't produce output during init.
-if command -v /usr/libexec/java_home &>/dev/null; then
+if [[ -z "$JAVA_HOME" ]] && [[ -x /usr/libexec/java_home ]]; then
   export JAVA_HOME=$(/usr/libexec/java_home -v 17 2>/dev/null)
 fi
+
+# ---- Completion ----
+# Needed before anything that calls `compdef` (eo, bun, nvm completions). Kept
+# above instant prompt because compinit may ask about insecure directories.
+autoload -Uz compinit && compinit
 
 # Suppress any remaining instant-prompt warnings (belt-and-suspenders).
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
@@ -25,11 +40,13 @@ fi
 
 # ---- History setup ----
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+HISTSIZE=50000
+SAVEHIST=50000
+setopt extended_history       # save timestamps
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
+setopt hist_ignore_space      # prefix a command with a space to keep it out of history
 setopt hist_verify
 
 # ---- completion using arrow keys (based on history) ----
@@ -37,7 +54,9 @@ bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
 # ---- Eza (better ls) -----
-alias ls="eza --icons=always"
+if command -v eza >/dev/null 2>&1; then
+  alias ls="eza --icons=always"
+fi
 
 # ---- Zoxide (better cd) ----
 if command -v zoxide >/dev/null 2>&1; then
@@ -51,15 +70,15 @@ if command -v direnv >/dev/null 2>&1; then
 fi
 
 # ---- eo cli autocompletion ----
-source <(eo completion zsh)
+if command -v eo >/dev/null 2>&1; then
+  source <(eo completion zsh)
+fi
 
 # ---- Pnpm ----
 alias pn="pnpm"
 
-# ---- Homebrew ----
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # ---- NVM ----
+# After Homebrew, so the nvm-selected node wins over Homebrew's node.
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
@@ -74,18 +93,13 @@ esac
 # ---- Go ----
 export PATH="$HOME/go/bin:$PATH"
 
-# ---- PostgreSQL ----
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-
 # ---- Envman ----
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
-# ---- Bun completions ----
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # ---- Bun ----
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
 # ---- Secrets (not tracked in git) ----
 # Put things like NPM_TOKEN in ~/.zshrc.secrets

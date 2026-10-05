@@ -1,9 +1,15 @@
-# This is Git's per-user configuration file.
-[user]
-	name = Edwin Boon
-	email = hello@edwinboon.dev
-# Please adapt and uncomment the following lines:
-#	name = Edwin Boon
-#	email = hello@edwinboon.dev 
+# Shared git defaults. Personal identity (name, email, signing key) lives in
+# ~/.gitconfig.local (created by install.sh, not tracked in this repo).
+[include]
+	path = ~/.gitconfig.local
+
 [init]
 	defaultBranch = main
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[diff]
+	colorMoved = default
+[merge]
+	conflictStyle = zdiff3

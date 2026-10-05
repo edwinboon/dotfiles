@@ -41,11 +41,11 @@ return {
 
 		-- Scroll opencode window
 		vim.keymap.set("n", "<leader>ou", function()
-			require("opencode").command("session.half. page.up")
+			require("opencode").command("session.half.page.up")
 		end, { desc = "Scroll opencode up" })
 
 		vim.keymap.set("n", "<leader>od", function()
-			require("opencode").command("session.half.page. down")
+			require("opencode").command("session.half.page.down")
 		end, { desc = "Scroll opencode down" })
 
 		-- Quick access:  Still keep Ctrl-.  for quick toggle

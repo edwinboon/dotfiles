@@ -43,30 +43,20 @@ return {
 			},
 			-- Format on save
 			format_on_save = {
-				lsp_fallback = true,
+				lsp_format = "fallback",
 				async = false,
 				timeout_ms = 1000,
 			},
 		})
 
 		-- Configure individual formatters
-		conform.formatters.prettier = {
-			args = {
-				"--stdin-filepath",
-				"$FILENAME",
-				"--tab-width",
-				"2",
-				"--use-tabs",
-				"false",
-			},
-		}
 		conform.formatters.shfmt = {
 			prepend_args = { "-i", "2" },
 		}
 
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 			conform.format({
-				lsp_fallback = true,
+				lsp_format = "fallback",
 				async = false,
 				timeout_ms = 1000,
 			})
